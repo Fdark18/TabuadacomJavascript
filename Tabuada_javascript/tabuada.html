@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Tabuada de 2 a 10</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #fffaf0;
+            text-align: center;
+            padding: 20px;
+        }
+        h1 {
+            margin-bottom: 30px;
+        }
+        .tabuada {
+            display: inline-block;
+            margin: 10px;
+            text-align: left;
+        }
+        .tabuada h2 {
+            background-color: #4CAF50;
+            color: white;
+            padding: 5px;
+            border-radius: 5px;
+        }
+        .tabuada p {
+            margin: 5px 0;
+        }
+        a {
+            display: inline-block;
+            margin-top: 30px;
+            padding: 10px 20px;
+            background-color: #2196F3;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        a:hover {
+            background-color: #0b7dda;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Tabuada de 2 a 10</h1>
+    <div id="tabuadas-container">
+        <!-- Tabuadas serão geradas aqui -->
+    </div>
+    <a href="index.html">Voltar ao Jogo</a>
+
+    <script>
+        const tabuadasContainer = document.getElementById('tabuadas-container');
+
+        for (let i = 2; i <= 10; i++) {
+            const tabuadaDiv = document.createElement('div');
+            tabuadaDiv.classList.add('tabuada');
+
+            const titulo = document.createElement('h2');
+            titulo.textContent = `Tabuada do ${i}`;
+            tabuadaDiv.appendChild(titulo);
+
+            for (let j = 1; j <= 10; j++) {
+                const p = document.createElement('p');
+                p.textContent = `${i} x ${j} = ${i * j}`;
+                tabuadaDiv.appendChild(p);
+            }
+
+            tabuadasContainer.appendChild(tabuadaDiv);
+        }
+    </script>
+
+</body>
+</html>

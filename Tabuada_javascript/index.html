@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Jogo de Matemática</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f8ff;
+            text-align: center;
+            padding-top: 50px;
+        }
+        #game-container {
+            display: none;
+        }
+        #game-over {
+            display: none;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            margin: 10px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            background-color: #4CAF50;
+            color: white;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        input[type="number"] {
+            padding: 10px;
+            font-size: 16px;
+            width: 100px;
+            text-align: center;
+        }
+        .hidden {
+            display: none;
+        }
+        #score {
+            font-size: 20px;
+            margin-bottom: 20px;
+        }
+        #operation {
+            font-size: 24px;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Jogo de Matemática</h1>
+    <div id="start-screen">
+        <button id="start-button">Iniciar Jogo</button>
+    </div>
+
+    <div id="game-container">
+        <div id="score">Pontuação: 0</div>
+        <div id="operation">?</div>
+        <input type="number" id="answer-input" placeholder="Resposta">
+        <button id="submit-button">Enviar</button>
+    </div>
+
+    <div id="game-over">
+        <h2>Game Over</h2>
+        <p>Sua pontuação caiu abaixo de zero.</p>
+        <button id="restart-button">Reiniciar</button>
+        <button id="exit-button">Sair</button>
+    </div>
+
+    <script>
+        const startButton = document.getElementById('start-button');
+        const gameContainer = document.getElementById('game-container');
+        const gameOverScreen = document.getElementById('game-over');
+        const submitButton = document.getElementById('submit-button');
+        const restartButton = document.getElementById('restart-button');
+        const exitButton = document.getElementById('exit-button');
+        const scoreDisplay = document.getElementById('score');
+        const operationDisplay = document.getElementById('operation');
+        const answerInput = document.getElementById('answer-input');
+
+        let score = 0;
+        let num1, num2, correctAnswer;
+
+        function startGame() {
+            document.getElementById('start-screen').style.display = 'none';
+            gameContainer.style.display = 'block';
+            score = 0;
+            updateScore();
+            generateQuestion();
+        }
+
+        function generateQuestion() {
+            num1 = getRandomInt(1, 10);
+            num2 = getRandomInt(1, 10);
+            correctAnswer = num1 * num2; // Você pode alterar para multiplicação se preferir
+            operationDisplay.textContent = `${num1} x ${num2} = ?`;
+            answerInput.value = '';
+            answerInput.focus();
+        }
+
+        function getRandomInt(min, max) {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+
+        function submitAnswer() {
+            const userAnswer = parseInt(answerInput.value);
+            if (isNaN(userAnswer)) {
+                alert("Por favor, insira um número válido.");
+                return;
+            }
+
+            if (userAnswer === correctAnswer) {
+                score += 1;
+            } else {
+                score -= 1;
+            }
+
+            updateScore();
+
+            if (score < 0) {
+                endGame();
+            } else {
+                generateQuestion();
+            }
+        }
+
+        function updateScore() {
+            scoreDisplay.textContent = `Pontuação: ${score}`;
+        }
+
+        function endGame() {
+            gameContainer.style.display = 'none';
+            gameOverScreen.style.display = 'block';
+        }
+
+        function restartGame() {
+            gameOverScreen.style.display = 'none';
+            startGame();
+        }
+
+        function exitGame() {
+            window.location.href = 'tabuada.html';
+        }
+
+        startButton.addEventListener('click', startGame);
+        submitButton.addEventListener('click', submitAnswer);
+        restartButton.addEventListener('click', restartGame);
+        exitButton.addEventListener('click', exitGame);
+
+        // Permitir enviar a resposta pressionando Enter
+        answerInput.addEventListener("keyup", function(event) {
+            if (event.key === "Enter") {
+                submitButton.click();
+            }
+        });
+    </script>
+
+</body>
+</html>
